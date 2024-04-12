@@ -1,11 +1,11 @@
 from collections import OrderedDict
 import tldextract
 import re
-import requests
 from . import helpers
 from . import helpdesk_helper
 from urllib.parse import urlparse
 from scrapy.selector import Selector
+from security import safe_requests
 
 
 def get_sitemap_if_available(url):
@@ -14,7 +14,7 @@ def get_sitemap_if_available(url):
         url = url + "/sitemap.xml" if reMatch is None else reMatch.group() + \
             "sitemap.xml"
 
-    return [url] if requests.get(url).status_code == 200 else []
+    return [url] if safe_requests.get(url).status_code == 200 else []
 
 
 def extract_root_from_input(input_string):
@@ -55,7 +55,7 @@ def to_fixme_config(config, urls):
     config["start_urls"] = urls
 
     mainSelector = "FIXME"
-    response = requests.get(urls[0])
+    response = safe_requests.get(urls[0])
     selector = Selector(text=response.content)
 
     if len(selector.css("article").extract()):

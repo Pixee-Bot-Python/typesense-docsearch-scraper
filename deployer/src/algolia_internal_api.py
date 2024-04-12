@@ -1,6 +1,7 @@
 import requests
 from os import environ
 from base64 import b64encode
+from security import safe_requests
 
 APPLICATION_ID_PROD_INTERNAL = environ.get('APPLICATION_ID_PROD_INTERNAL',
                                            None)  # website internal DocSearch app id
@@ -32,7 +33,7 @@ def get_application_rights():
     endpoint = get_endpoint(
         '/applications/' + app_id)  # , '?fields=application_rights')
 
-    r = requests.get(endpoint, headers=get_headers())
+    r = safe_requests.get(endpoint, headers=get_headers())
 
     data = r.json()
 

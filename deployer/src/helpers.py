@@ -1,4 +1,5 @@
 import os
+from security import safe_requests
 
 api_key_prod = os.environ.get('API_KEY_PROD', '')
 
@@ -32,9 +33,8 @@ def get_user_value(message):
 
 
 def make_custom_get_request(url):
-    import requests
 
-    return requests.get(url)
+    return safe_requests.get(url)
 
 
 def make_request(endpoint, type=None, data=None, username=None, password=None,
@@ -90,11 +90,11 @@ def make_request(endpoint, type=None, data=None, username=None, password=None,
         return r
 
     if data != None:
-        r = requests.get(endpoint,
+        r = safe_requests.get(endpoint,
                          auth=(username, password),
                          params=data)
     else:
-        r = requests.get(endpoint,
+        r = safe_requests.get(endpoint,
                          auth=(username, password))
 
     if r.status_code // 100 != 2:
