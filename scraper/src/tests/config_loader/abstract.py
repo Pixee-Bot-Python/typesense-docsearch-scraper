@@ -2,7 +2,8 @@
 import json
 
 
-def config(additional_config={}):
+def config(additional_config=None):
+    additional_config = {} if additional_config is None else additional_config
     base_config = {
         'allowed_domains': 'allowed_domains',
         'api_key': 'api_key',
