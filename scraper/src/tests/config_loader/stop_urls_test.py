@@ -29,5 +29,5 @@ class TestStopUrls:
         with pytest.raises(Exception) as excinfo:
             # When
             ConfigLoader(conf)
-            # Then
-            assert 'start_urls should be list' in str(excinfo.value)
+        # Then
+        assert 'start_urls should be list' in str(excinfo.value)
