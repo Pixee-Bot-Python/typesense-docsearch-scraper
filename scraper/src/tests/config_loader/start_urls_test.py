@@ -27,8 +27,8 @@ class TestStartUrls:
         with pytest.raises(Exception) as excinfo:
             # When
             ConfigLoader(c)
-            # Then
-            assert 'start_urls should be list' in str(excinfo.value)
+        # Then
+        assert 'start_urls should be list' in str(excinfo.value)
 
     def test_start_urls_should_have_at_least_one_element(self):
         """ Should throw if start_urls does not have at least one element """
