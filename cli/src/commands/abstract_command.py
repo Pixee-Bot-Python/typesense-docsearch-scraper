@@ -1,4 +1,5 @@
 from os import environ
+from security import safe_command
 
 
 class AbstractCommand:
@@ -54,7 +55,7 @@ class AbstractCommand:
         merge_env.update(env)
 
         from subprocess import Popen
-        p = Popen(arguments, env=merge_env)
+        p = safe_command.run(Popen, arguments, env=merge_env)
         try:
             p.wait()
         except KeyboardInterrupt:
