@@ -94,14 +94,14 @@ def add_user_to_index(index_name, user_email):
     # User has already access to some other indices
     if right:
         endpoint = get_endpoint('/application_rights/{}'.format(right['id']))
-        requests.patch(endpoint, json=payload, headers=headers)
+        requests.patch(endpoint, json=payload, headers=headers, timeout=60)
         print(user_email + " is already registered on algolia dashboard (has right to other DOCSEARCH indices), "
               "analytics granted to " + index_name)
         return True
     # Adding user for the first time
     endpoint = get_endpoint('/application_rights/')
 
-    response = requests.post(endpoint, json=payload, headers=headers)
+    response = requests.post(endpoint, json=payload, headers=headers, timeout=60)
     data = response.json()
 
     if 'user' in data and 'invitation_url' in data['user']:
@@ -142,10 +142,10 @@ def remove_user_from_index(index_name, user_email):
                     'indices': indices,
                     'analytics': True
                 }
-            }, headers=get_headers())
+            }, headers=get_headers(), timeout=60)
     else:
         requests.delete(
             get_endpoint('/application_rights/{}'.format(right['id'])),
-            headers=get_headers())
+            headers=get_headers(), timeout=60)
 
     print(user_email + " uninvite from " + index_name)
